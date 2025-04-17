@@ -36,7 +36,8 @@ public class reportAnalyticsLoginPage extends BasePageClass {
     	rAEnterpriseName.sendKeys(enterpriseName);
     	rAPassword.sendKeys(password);
     	rASignInButton.click();
-    	Thread.sleep(6000);
+    	WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(150));
+		wait1.until(ExpectedConditions.visibilityOf(rALoginID));
     	//add validation for login
     	String applicationID = rALoginID.getText();
     	Assert.assertTrue(applicationID.toLowerCase().indexOf(userName.toLowerCase())==-1);

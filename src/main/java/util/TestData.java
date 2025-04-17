@@ -71,38 +71,87 @@ public class TestData {
 		return rowIndex;
 	}
 
+	/*
+	 * public String getCellData(String colName, int rowNum) { try { int col_Num =
+	 * -1; // sheet = workbook.getSheet(sheetName); sheet = workbook.getSheetAt(0);
+	 * row = sheet.getRow(0); for (int i = 0; i < row.getLastCellNum(); i++) { if
+	 * (row.getCell(i).getStringCellValue().trim().equals(colName.trim())) col_Num =
+	 * i; }
+	 * 
+	 * row = sheet.getRow(rowNum); cell = row.getCell(col_Num);
+	 * 
+	 * if (cell.getCellType() == CellType.STRING) return cell.getStringCellValue();
+	 * else if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() ==
+	 * CellType.FORMULA) { String cellValue =
+	 * String.valueOf(cell.getNumericCellValue()); if
+	 * (HSSFDateUtil.isCellDateFormatted(cell)) { DateFormat df = new
+	 * SimpleDateFormat("dd/MM/yy"); Date date = cell.getDateCellValue(); cellValue
+	 * = df.format(date); } return cellValue; } else if (cell.getCellType() ==
+	 * CellType.BLANK) return ""; else return
+	 * String.valueOf(cell.getBooleanCellValue()); } catch (Exception e) {
+	 * e.printStackTrace(); return "row " + rowNum + " or column " + colName +
+	 * " does not exist  in Excel"; } }
+	 */
+	
 	public String getCellData(String colName, int rowNum) {
-		try {
-			int col_Num = -1;
-			// sheet = workbook.getSheet(sheetName);
-			sheet = workbook.getSheetAt(0);
-			row = sheet.getRow(0);
-			for (int i = 0; i < row.getLastCellNum(); i++) {
-				if (row.getCell(i).getStringCellValue().trim().equals(colName.trim()))
-					col_Num = i;
-			}
-
-			row = sheet.getRow(rowNum);
-			cell = row.getCell(col_Num);
-
-			if (cell.getCellType() == CellType.STRING)
-				return cell.getStringCellValue();
-			else if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
-				String cellValue = String.valueOf(cell.getNumericCellValue());
-				if (HSSFDateUtil.isCellDateFormatted(cell)) {
-					DateFormat df = new SimpleDateFormat("dd/MM/yy");
-					Date date = cell.getDateCellValue();
-					cellValue = df.format(date);
-				}
-				return cellValue;
-			} else if (cell.getCellType() == CellType.BLANK)
-				return "";
-			else
-				return String.valueOf(cell.getBooleanCellValue());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "row " + rowNum + " or column " + colName + " does not exist  in Excel";
-		}
+	    try {
+	        int col_Num = -1;
+	        sheet = workbook.getSheetAt(0);
+	        
+	        // Null check for header row
+	        row = sheet.getRow(0);
+	        if (row == null) {
+	            return "Header row is missing in Excel";
+	        }
+	 
+	        for (int i = 0; i < row.getLastCellNum(); i++) {
+	            Cell headerCell = row.getCell(i);
+	            if (headerCell != null && headerCell.getCellType() == CellType.STRING) {
+	                if (headerCell.getStringCellValue().trim().equalsIgnoreCase(colName.trim())) {
+	                    col_Num = i;
+	                    break;
+	                }
+	            }
+	        }
+	 
+	        if (col_Num == -1) {
+	            return "Column '" + colName + "' not found in Excel";
+	        }
+	 
+	        row = sheet.getRow(rowNum);
+	        if (row == null) {
+	            return "Row " + rowNum + " does not exist in Excel";
+	        }
+	 
+	        cell = row.getCell(col_Num);
+	        if (cell == null) {
+	            return ""; // blank cell
+	        }
+	 
+	        switch (cell.getCellType()) {
+	            case STRING:
+	                return cell.getStringCellValue().trim();
+	            case NUMERIC:
+	            case FORMULA:
+	                String cellValue = String.valueOf(cell.getNumericCellValue());
+	                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+	                    DateFormat df = new SimpleDateFormat("dd/MM/yy");
+	                    Date date = cell.getDateCellValue();
+	                    cellValue = df.format(date);
+	                }
+	                return cellValue;
+	            case BLANK:
+	                return "";
+	            case BOOLEAN:
+	                return String.valueOf(cell.getBooleanCellValue());
+	            default:
+	                return "Unsupported cell type";
+	        }
+	 
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "Error reading row " + rowNum + ", column '" + colName + "'";
+	    }
 	}
 
 	public String getTestData(String TCID, String colName) {

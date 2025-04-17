@@ -37,12 +37,12 @@ public class BaseTest {
 	protected OrderPlacementPage orderPlacepage;
 	protected reportAnalyticsLoginPage rALoginPage;
 	protected reportAnalyticsGuestCheckPage guestCheckPage;
-	WebDriver driver;
+	protected WebDriver driver;
 	static Properties properties;
-	static TestData testData;
+	protected static TestData testData;
 	static utility utils;
-	static String URL;
-	static String reportAnalyticsURL;
+	protected static String URL;
+	protected static String reportAnalyticsURL;
 	static ExtentSparkReporter extentSparkReporter;
 	static ExtentReports extentReports;
 	// static ExtentTest extentTest;

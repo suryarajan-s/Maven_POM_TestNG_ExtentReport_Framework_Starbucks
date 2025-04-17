@@ -34,10 +34,10 @@ public class RandATestCase extends BaseTest {
 		    
 		    try {
 		        guestCheckPage.rAGuestCheckReport(
-		            testData.getTestData("1", "rAStoreName"),
-		            orderNumber,
-		            testData.getTestData("1", "productName"),
-		            testData.getTestData("1", "productPrize")
+		            testData.getTestData("2", "rAStoreName"),
+		           
+		            testData.getTestData("2", "productName"),
+		            testData.getTestData("2", "productPrize"),testData.getTestData("2", "orderTime")
 		        );
 		        extentTestThread.get().log(Status.PASS, "Successfully validated the order in R&A App");
 		    } catch (Throwable t) {
