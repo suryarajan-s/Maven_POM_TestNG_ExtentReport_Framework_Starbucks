@@ -136,8 +136,6 @@ public class OrderPlacementPage extends BasePageClass {
 		WebElement frequntlyOrderedItemElement = dynamicXpath(driver, frequntlyOrderedItemXpath, data.getTestData(TCID, "frequentlyOrderedItem"));
 
 		String frequntlyOrderedItemAdded = frequntlyOrderedItemElement.getText();
-		System.out.println(frequntlyOrderedItemAdded);
-		System.out.println(data.getTestData(TCID, "frequentlyOrderedItem").trim());
 		Assert.assertTrue(frequntlyOrderedItemAdded.contains(data.getTestData(TCID, "frequentlyOrderedItem").trim()));
 
 		String price = productPrice.getText().replace("£", "");
