@@ -8,6 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 public class HomePage extends BasePageClass {
@@ -23,6 +24,10 @@ public class HomePage extends BasePageClass {
 
 	@FindBy(xpath = "//button[contains(text(),'Save')]")
 	WebElement saveButton;
+	
+	@FindBy(xpath = "//div[contains(@data-testid,'quantity-selector')]//select")
+	WebElement quantityDropDown;
+	
 
 	public static WebElement dynamicXpath(WebDriver driver, String xpath, String value) {
 		return driver.findElement(By.xpath(String.format(xpath, value)));
@@ -45,7 +50,7 @@ public class HomePage extends BasePageClass {
 		Thread.sleep(5000);
 	}
 
-	public void customizeSelectedProduct(String sizeData, String milkData, String syrupData, String shots, int quantity)
+	public void customizeSelectedProduct(String sizeData, String milkData, String syrupData, String shots, int quantity,String quantityDropDown)
 			throws InterruptedException, IOException {
 		List<WebElement> sizeCheck = driver.findElements(By.xpath("//div[text()='Size']"));
 		if (sizeCheck.size() != 0) {
@@ -55,6 +60,10 @@ public class HomePage extends BasePageClass {
 			System.out.println(defaultSelection.isSelected());
 			Assert.assertTrue(defaultSelection.isSelected());
 			Thread.sleep(3000);
+			if (quantityDropDown != null && !quantityDropDown.trim().isEmpty()) {
+				quantitySelection(quantityDropDown);
+			}
+			
 			String sizeSelectionXpath = "//div[text()='%s']/ancestor::label";
 			WebElement size = dynamicXpath(driver, sizeSelectionXpath, sizeData);
 			size.click();
@@ -95,14 +104,16 @@ public class HomePage extends BasePageClass {
 			if (shots != null && !shots.trim().isEmpty()) {
 				shotSelection(shots, quantity);
 			}
+			
+			
 
 			saveButton.click();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		}
 	}
 
 	public void customizeSelectedProductWithoutNavigation(String sizeData, String milkData, String syrupData,
-			String shots, int quantity) throws InterruptedException, IOException {
+			String shots, int quantity,String quantityDropDown) throws InterruptedException, IOException {
 		List<WebElement> sizeCheck = driver.findElements(By.xpath("//div[text()='Size']"));
 		if (sizeCheck.size() != 0) {
 			WebElement defaultSelection = driver
@@ -111,6 +122,9 @@ public class HomePage extends BasePageClass {
 			System.out.println(defaultSelection.isSelected());
 			Assert.assertTrue(defaultSelection.isSelected());
 			Thread.sleep(3000);
+			if (quantityDropDown != null && !quantityDropDown.trim().isEmpty()) {
+				quantitySelection(quantityDropDown);
+			}
 			String sizeSelectionXpath = "//div[text()='%s']/ancestor::label";
 			WebElement size = dynamicXpath(driver, sizeSelectionXpath, sizeData);
 			size.click();
@@ -149,6 +163,8 @@ public class HomePage extends BasePageClass {
 			if (shots != null && !shots.trim().isEmpty()) {
 				shotSelection(shots, quantity);
 			}
+			
+			
 
 			saveButton.click();
 			Thread.sleep(3000);
@@ -184,6 +200,13 @@ public class HomePage extends BasePageClass {
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", syrupSelectionElement);
 			Thread.sleep(3000);
 		}
+
+	}
+	
+	public void quantitySelection(String quantity) throws InterruptedException {
+		Select select = new Select(quantityDropDown);
+		select.selectByVisibleText(quantity);
+		Thread.sleep(3000);
 
 	}
 

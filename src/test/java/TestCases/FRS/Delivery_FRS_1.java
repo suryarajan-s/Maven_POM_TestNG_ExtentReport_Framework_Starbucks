@@ -57,7 +57,7 @@ public class Delivery_FRS_1 extends BaseTest {
 		try {
 			homePage.customizeSelectedProduct(testData.getTestData("1", "sizeData"),
 					testData.getTestData("1", "milkSelection"), testData.getTestData("1", "syrupSelection"),
-					testData.getTestData("1", "shotSelection"), 1);
+					testData.getTestData("1", "shotSelection"), 1,testData.getTestData("1", "quantityValueDropDown"));
 			extentTestThread.get().log(Status.PASS,
 					"We have customized product based on user data In the UberEats App");
 		} catch (Throwable t) {

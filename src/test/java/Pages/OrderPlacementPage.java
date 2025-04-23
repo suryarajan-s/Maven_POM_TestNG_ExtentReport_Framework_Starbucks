@@ -43,6 +43,9 @@ public class OrderPlacementPage extends BasePageClass {
 	@FindBy(xpath = "//div[contains(text(),'Preparing your order')]")
 	WebElement placedOrderValidation;
 
+	@FindBy(xpath = "//button[text()='See details']")
+	WebElement seeDetailsButton;
+
 	public static WebElement dynamicXpath(WebDriver driver, String xpath, String value) {
 		return driver.findElement(By.xpath(String.format(xpath, value)));
 	}
@@ -52,7 +55,7 @@ public class OrderPlacementPage extends BasePageClass {
 		TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
 		Thread.sleep(3000);
 		sizeData = sizeData.trim();
-		String condimentsXapth = "//div[text()='%s']/following::div[2]//ul";
+		String condimentsXapth = "//div[text()='%s']/following::ul";
 		WebElement condimentsValidationElement = dynamicXpath(driver, condimentsXapth, sizeData);
 
 		String condimentsAdded = condimentsValidationElement.getText();
@@ -72,8 +75,9 @@ public class OrderPlacementPage extends BasePageClass {
 
 		String price = productPrice.getText().replace("£", "");
 		System.out.println(price);
+		Thread.sleep(2000);
 		data.writeTestData(TCID, "productPrize", price);
-
+		System.out.println("the price is written in the excel file " + price + " ");
 		checkOutButton.click();
 		Thread.sleep(5000);
 		if (skipbutton.isDisplayed()) {
@@ -97,7 +101,57 @@ public class OrderPlacementPage extends BasePageClass {
 		System.out.println(ukFormattedTime);
 		data.writeTestData(TCID, "orderTime", ukFormattedTime);
 		Thread.sleep(4000);
-		System.out.println("the file is written in the excel file " + data.getTestData(TCID, "orderTime") + "");
+		System.out.println("the order time is written in the excel file " + data.getTestData(TCID, "orderTime") + "");
 
 	}
+
+	public void addFrequentlyOrderedItem(String TCID) throws InterruptedException, IOException {
+		TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
+		WebDriverWait waitForResult = new WebDriverWait(driver, Duration.ofSeconds(150));
+		waitForResult.until(ExpectedConditions.visibilityOf(seeDetailsButton));
+		seeDetailsButton.click();
+		Thread.sleep(3000);
+
+		String productNameXpath = "//h3[text()='Frequently bought together']/following::a//div//span";
+		WebElement selectProduct = driver.findElement(By.xpath(productNameXpath));
+		WebDriverWait waitForItem = new WebDriverWait(driver, Duration.ofSeconds(150));
+		waitForItem.until(ExpectedConditions.visibilityOf(selectProduct));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", selectProduct);
+		Thread.sleep(500); // optional
+		String selectedProductName = selectProduct.getText();
+		data.writeTestData(TCID, "frequentlyOrderedItem", selectedProductName);
+		Thread.sleep(4000);
+		System.out.println("the selected frequently ordered product is written in the excel file "
+				+ data.getTestData(TCID, "frequentlyOrderedItem") + "");
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", selectProduct);
+		Thread.sleep(5000);
+
+		addToCartButton.click();
+		Thread.sleep(7000);
+
+		addToCartButton.click();
+		Thread.sleep(7000);
+
+		String frequntlyOrderedItemXpath = "//div[text()='%s']";
+		WebElement frequntlyOrderedItemElement = dynamicXpath(driver, frequntlyOrderedItemXpath, data.getTestData(TCID, "frequentlyOrderedItem"));
+
+		String frequntlyOrderedItemAdded = frequntlyOrderedItemElement.getText();
+		System.out.println(frequntlyOrderedItemAdded);
+		System.out.println(data.getTestData(TCID, "frequentlyOrderedItem").trim());
+		Assert.assertTrue(frequntlyOrderedItemAdded.contains(data.getTestData(TCID, "frequentlyOrderedItem").trim()));
+
+		String price = productPrice.getText().replace("£", "");
+		System.out.println(price);
+		Thread.sleep(2000);
+		data.writeTestData(TCID, "productPrize", price);
+		System.out.println("the price is written in the excel file " + price + " ");
+		checkOutButton.click();
+		Thread.sleep(5000);
+		if (skipbutton.isDisplayed()) {
+			skipbutton.click();
+			Thread.sleep(5000);
+		}
+
+	}
+
 }

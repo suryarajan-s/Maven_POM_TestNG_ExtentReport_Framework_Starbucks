@@ -102,7 +102,7 @@ public class LoginPage extends BasePageClass {
 		userEmail.sendKeys(userName);
 		Thread.sleep(3000);
 		userEmail.sendKeys(Keys.ENTER);
-		Thread.sleep(500000);
+		Thread.sleep(5000);
 		
 		WebElement captchaCheck = driver.findElement(By.xpath("//button[text()='Start Puzzle']"));
 		

@@ -93,7 +93,7 @@ public class reportAnalyticsGuestCheckPage extends BasePageClass {
 		enterCheckTotal.sendKeys(inputPriceOfProduct);
 		Thread.sleep(3000);
 		searchButton.click();
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(150));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(250));
 		wait.until(ExpectedConditions.visibilityOf(searchResult));
 		System.out.println(orderTime);
 		String orderNumberDisplyed = driver
@@ -121,6 +121,8 @@ public class reportAnalyticsGuestCheckPage extends BasePageClass {
 
 		String prizeFromReport = price.getText();
 		Assert.assertTrue(inputPriceOfProduct.contains(prizeFromReport));
+		
+		Thread.sleep(8000);
 
 	}
 }
