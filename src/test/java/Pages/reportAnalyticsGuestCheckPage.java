@@ -64,8 +64,8 @@ public class reportAnalyticsGuestCheckPage extends BasePageClass {
 	WebElement price;
 
 	public void rAGuestCheckReport(String locationSelection,String inputProduct,
-			String inputPriceOfProduct,String orderTime) throws InterruptedException, IOException {
-		//TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
+			String inputPriceOfProduct,String TCID) throws InterruptedException, IOException {
+		TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
 		WebDriverWait guestCheckWait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		guestCheckWait.until(ExpectedConditions.elementToBeClickable(guestCheckTab));
 		guestCheckTab.click();
@@ -90,14 +90,17 @@ public class reportAnalyticsGuestCheckPage extends BasePageClass {
 		Thread.sleep(3000);
 		equalSelection.click();
 		Thread.sleep(3000);
+		System.out.println(data.getTestData(TCID, "productPrize"));
+		inputPriceOfProduct = data.getTestData(TCID, "productPrize");
+		Thread.sleep(2000);
 		enterCheckTotal.sendKeys(inputPriceOfProduct);
 		Thread.sleep(3000);
 		searchButton.click();
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(250));
 		wait.until(ExpectedConditions.visibilityOf(searchResult));
-		System.out.println(orderTime);
+		System.out.println(data.getTestData(TCID, "orderTime"));
 		String orderNumberDisplyed = driver
-				.findElement(By.xpath("//*[contains(., '" + orderTime + "')][last()]/ancestor::tr//td[2]//a[1]"))
+				.findElement(By.xpath("//*[contains(., '" + data.getTestData(TCID, "orderTime") + "')][last()]/ancestor::tr//td[2]//a[1]"))
 				.getText();
 		System.out.println(orderNumberDisplyed);
 		driver.findElement(By.xpath("//a[text()='" + orderNumberDisplyed + "']")).click();

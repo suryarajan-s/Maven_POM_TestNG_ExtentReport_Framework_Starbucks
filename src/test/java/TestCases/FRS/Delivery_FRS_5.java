@@ -101,7 +101,7 @@ public class Delivery_FRS_5 extends BaseTest {
 		try {
 			guestCheckPage.rAGuestCheckReport(testData.getTestData("5", "rAStoreName"),
 					testData.getTestData("5", "productName"), testData.getTestData("5", "productPrize"),
-					testData.getTestData("5", "orderTime"));
+					"5");
 			extentTestThread.get().log(Status.PASS, "Successfully validated the order in R&A App");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during order validation: " + t.getMessage());

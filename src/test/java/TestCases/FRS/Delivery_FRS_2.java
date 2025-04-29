@@ -57,7 +57,8 @@ public class Delivery_FRS_2 extends BaseTest {
 		try {
 			homePage.customizeSelectedProductWithoutNavigation(testData.getTestData("2", "sizeData"),
 					testData.getTestData("2", "milkSelection"), testData.getTestData("2", "syrupSelection"),
-					testData.getTestData("2", "shotSelection"), 1,testData.getTestData("2", "quantityValueDropDown"));
+					testData.getTestData("2", "shotSelection"), 1, testData.getTestData("2", "quantityValueDropDown"),
+					testData.getTestData("2", "beanSelection"));
 			extentTestThread.get().log(Status.PASS,
 					"We have customized product based on user data In the UberEats App");
 		} catch (Throwable t) {
@@ -68,7 +69,8 @@ public class Delivery_FRS_2 extends BaseTest {
 
 		try {
 			orderPlacepage.addToOrder(testData.getTestData("2", "milkSelection"),
-					testData.getTestData("2", "syrupSelection"), testData.getTestData("2", "shotSelection"),testData.getTestData("2", "sizeData"), "2");
+					testData.getTestData("2", "syrupSelection"), testData.getTestData("2", "shotSelection"),
+					testData.getTestData("2", "sizeData"), testData.getTestData("2", "beanSelection"), "2");
 			extentTestThread.get().log(Status.PASS,
 					"We have validated the condiments added and proceeded with the checkout In the UberEats App");
 			Thread.sleep(4000);
@@ -102,7 +104,7 @@ public class Delivery_FRS_2 extends BaseTest {
 		try {
 			guestCheckPage.rAGuestCheckReport(testData.getTestData("2", "rAStoreName"),
 					testData.getTestData("2", "productName"), testData.getTestData("2", "productPrize"),
-					testData.getTestData("2", "orderTime"));
+					"2");
 			extentTestThread.get().log(Status.PASS, "Successfully validated the order in R&A App");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during order validation: " + t.getMessage());

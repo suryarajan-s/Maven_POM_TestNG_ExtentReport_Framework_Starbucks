@@ -34,9 +34,6 @@ public class OrderPlacementPage extends BasePageClass {
 	@FindBy(xpath = "//button[text()='Skip']")
 	WebElement skipbutton;
 
-	@FindBy(xpath = "//div[@class='sy']//ul")
-	WebElement condimentsValidation;
-
 	@FindBy(xpath = "//div[text()='Subtotal']/following::span")
 	WebElement productPrice;
 
@@ -45,12 +42,21 @@ public class OrderPlacementPage extends BasePageClass {
 
 	@FindBy(xpath = "//button[text()='See details']")
 	WebElement seeDetailsButton;
+	
+	@FindBy(xpath = "//button[@aria-label='Decrement']/following::div")
+	WebElement quantityValidation;
+	
+	@FindBy(xpath = "//button[@aria-label='Close']")
+	WebElement closeButton;
+	
+	@FindBy(xpath = "//div[text()='Delivery Fee']/following::div[3]")
+	WebElement deliveryPriorityValidation;
 
 	public static WebElement dynamicXpath(WebDriver driver, String xpath, String value) {
 		return driver.findElement(By.xpath(String.format(xpath, value)));
 	}
 
-	public void addToOrder(String milk, String syrup, String shots, String sizeData, String TCID)
+	public void addToOrder(String milk, String syrup, String shots, String sizeData, String bean,String TCID)
 			throws InterruptedException, IOException {
 		TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
 		Thread.sleep(3000);
@@ -65,7 +71,11 @@ public class OrderPlacementPage extends BasePageClass {
 		} else if (condimentsAdded.contains(syrup)) {
 			Assert.assertTrue(condimentsAdded.contains(syrup));
 		}
-
+		
+		else if(condimentsAdded.contains(bean))
+		{
+			Assert.assertTrue(condimentsAdded.contains(bean));
+		}
 		else {
 			Assert.assertTrue(condimentsAdded.contains(shots));
 		}
@@ -79,6 +89,7 @@ public class OrderPlacementPage extends BasePageClass {
 		data.writeTestData(TCID, "productPrize", price);
 		System.out.println("the price is written in the excel file " + price + " ");
 		checkOutButton.click();
+		
 		Thread.sleep(5000);
 		if (skipbutton.isDisplayed()) {
 			skipbutton.click();
@@ -133,7 +144,8 @@ public class OrderPlacementPage extends BasePageClass {
 		Thread.sleep(7000);
 
 		String frequntlyOrderedItemXpath = "//div[text()='%s']";
-		WebElement frequntlyOrderedItemElement = dynamicXpath(driver, frequntlyOrderedItemXpath, data.getTestData(TCID, "frequentlyOrderedItem"));
+		WebElement frequntlyOrderedItemElement = dynamicXpath(driver, frequntlyOrderedItemXpath,
+				data.getTestData(TCID, "frequentlyOrderedItem"));
 
 		String frequntlyOrderedItemAdded = frequntlyOrderedItemElement.getText();
 		Assert.assertTrue(frequntlyOrderedItemAdded.contains(data.getTestData(TCID, "frequentlyOrderedItem").trim()));
@@ -151,5 +163,88 @@ public class OrderPlacementPage extends BasePageClass {
 		}
 
 	}
+	
+	public void addToOrderForNonDrink(String TCID) throws IOException, InterruptedException {
+		TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
+		addToCartButton.click();
+		Thread.sleep(7000);
+		if (data.getTestData(TCID, "quantityValueDropDown") != null && !data.getTestData(TCID, "quantityValueDropDown").trim().isEmpty()) {
+			String quantity = quantityValidation.getText();
+			Assert.assertTrue(quantity.contains(data.getTestData(TCID, "quantityValueDropDown")));
+		}
+		
+		String price = productPrice.getText().replace("£", "");
+		System.out.println(price);
+		Thread.sleep(2000);
+		data.writeTestData(TCID, "productPrize", price);
+		System.out.println("the price is written in the excel file " + price + " ");
+		checkOutButton.click();
+		Thread.sleep(5000);
+		if (skipbutton.isDisplayed()) {
+			skipbutton.click();
+			Thread.sleep(5000);
+		}
+	}
+	
+	public void clickCloseButton() throws InterruptedException {
+		closeButton.click();
+		Thread.sleep(5000);
+	}
+	
+	public void clickCheckoutButton() throws InterruptedException {
+		checkOutButton.click();
+		Thread.sleep(5000);
+		if (skipbutton.isDisplayed()) {
+			skipbutton.click();
+			Thread.sleep(5000);
+		}
 
+	}
+	
+	public void addMultipleItemsToOrder(String milk, String syrup, String shots, String sizeData, String bean,String TCID)
+			throws InterruptedException, IOException {
+		TestData data = new TestData(System.getProperty("user.dir") + "\\TestData\\starBucksTestData.xlsx");
+		Thread.sleep(3000);
+		sizeData = sizeData.trim();
+		String condimentsXapth = "//div[text()='%s']/following::ul";
+		WebElement condimentsValidationElement = dynamicXpath(driver, condimentsXapth, sizeData);
+
+		String condimentsAdded = condimentsValidationElement.getText();
+		System.out.println(condimentsAdded);
+		if (condimentsAdded.contains(milk)) {
+			Assert.assertTrue(condimentsAdded.contains(milk));
+		} else if (condimentsAdded.contains(syrup)) {
+			Assert.assertTrue(condimentsAdded.contains(syrup));
+		}
+		
+		else if(condimentsAdded.contains(bean))
+		{
+			Assert.assertTrue(condimentsAdded.contains(bean));
+		}
+		else {
+			Assert.assertTrue(condimentsAdded.contains(shots));
+		}
+
+		addToCartButton.click();
+		Thread.sleep(7000);
+
+		String price = productPrice.getText().replace("£", "");
+		System.out.println(price);
+		Thread.sleep(2000);
+		data.writeTestData(TCID, "productPrize", price);
+		System.out.println("the price is written in the excel file " + price + " ");
+	}
+	
+	public void setDeliveryPriority(String deliveryPriority) throws InterruptedException {
+		String deliveryPriorityXpath = "//span[text()='%s']";
+		WebElement deliveryPriorityElement = dynamicXpath(driver, deliveryPriorityXpath, deliveryPriority);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", deliveryPriorityElement);
+		Thread.sleep(500); // optional
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", deliveryPriorityElement);
+		Thread.sleep(3000);
+		
+		System.out.println(deliveryPriorityElement.getText());
+		Assert.assertTrue(deliveryPriorityElement.getText().contains(deliveryPriority));
+		
+	}
 }

@@ -68,7 +68,8 @@ public class Delivery_FRS_4 extends BaseTest {
 
 		try {
 			orderPlacepage.addToOrder(testData.getTestData("4", "milkSelection"),
-					testData.getTestData("4", "syrupSelection"), testData.getTestData("4", "shotSelection"), testData.getTestData("4", "sizeData"),"4");
+					testData.getTestData("4", "syrupSelection"), testData.getTestData("4", "shotSelection"),
+					testData.getTestData("4", "sizeData"), testData.getTestData("4", "beanSelection"), "4");
 			extentTestThread.get().log(Status.PASS,
 					"We have validated the condiments added and proceeded with the checkout In the UberEats App");
 			Thread.sleep(4000);
@@ -102,7 +103,7 @@ public class Delivery_FRS_4 extends BaseTest {
 		try {
 			guestCheckPage.rAGuestCheckReport(testData.getTestData("4", "rAStoreName"),
 					testData.getTestData("4", "productName"), testData.getTestData("4", "productPrize"),
-					testData.getTestData("4", "orderTime"));
+					"4");
 			extentTestThread.get().log(Status.PASS, "Successfully validated the order in R&A App");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during order validation: " + t.getMessage());

@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
 
-public class Delivery_FRS_Module extends BaseTest {
+public class Delivery_FRS_LoginCheck extends BaseTest {
 
 	@Test
 	public void DeliveryUberEats() throws IOException, InterruptedException {

@@ -113,7 +113,7 @@ public class HomePage extends BasePageClass {
 	}
 
 	public void customizeSelectedProductWithoutNavigation(String sizeData, String milkData, String syrupData,
-			String shots, int quantity,String quantityDropDown) throws InterruptedException, IOException {
+			String shots, int quantity,String quantityDropDown,String bean) throws InterruptedException, IOException {
 		List<WebElement> sizeCheck = driver.findElements(By.xpath("//div[text()='Size']"));
 		if (sizeCheck.size() != 0) {
 			WebElement defaultSelection = driver
@@ -131,7 +131,14 @@ public class HomePage extends BasePageClass {
 			Thread.sleep(5000);
 			customizeButton.click();
 			Thread.sleep(3000);
-			customizeButton.click();
+			if (bean != null && !bean.trim().isEmpty()) {
+				beanSelection(bean);
+			}
+
+			List<WebElement> customizeItemButton = driver.findElements(By.xpath("//div[text()='Customize this item']"));
+			if (customizeItemButton.size() != 0) {
+				customizeButton.click();
+			}
 			Thread.sleep(3000);
 			List<WebElement> checkBoxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
 			for (WebElement checkBox : checkBoxes) {
@@ -222,5 +229,20 @@ public class HomePage extends BasePageClass {
 			Assert.assertTrue(addressData.equalsIgnoreCase(deliveryAddress.getText()));
 		}
 
+	}
+	
+	public void customizeNonDrinkProduct(String quantity) throws InterruptedException {
+		if (quantity != null && !quantity.trim().isEmpty()) {
+			quantitySelection(quantity);
+		}
+	}
+	
+	public void beanSelection(String bean) throws InterruptedException {
+		String beanSelectionXpath = "//div[text()='%s']/ancestor::label";
+		WebElement beanSelectionElement = dynamicXpath(driver, beanSelectionXpath, bean);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", beanSelectionElement);
+		Thread.sleep(500); // optional
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", beanSelectionElement);
+		Thread.sleep(3000);
 	}
 }
