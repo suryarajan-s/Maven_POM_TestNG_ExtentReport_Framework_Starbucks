@@ -90,7 +90,7 @@ public class reportAnalyticsGuestCheckPage extends BasePageClass {
 		Thread.sleep(3000);
 		equalSelection.click();
 		Thread.sleep(3000);
-		System.out.println(data.getTestData(TCID, "productPrize"));
+		System.out.println("The input price of the product is : " +data.getTestData(TCID, "productPrize")+ "");
 		inputPriceOfProduct = data.getTestData(TCID, "productPrize");
 		Thread.sleep(2000);
 		enterCheckTotal.sendKeys(inputPriceOfProduct);

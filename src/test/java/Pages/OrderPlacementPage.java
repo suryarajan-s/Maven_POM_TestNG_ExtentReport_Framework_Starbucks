@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -51,6 +52,15 @@ public class OrderPlacementPage extends BasePageClass {
 	
 	@FindBy(xpath = "//div[text()='Delivery Fee']/following::div[3]")
 	WebElement deliveryPriorityValidation;
+	
+	@FindBy(xpath = "//button[@data-testid='edit-delivery-instructions-button']")
+	WebElement editButtonDeliveryOption;
+	
+	@FindBy(xpath = "//button[text()='Update']")
+	WebElement updateButton;
+	
+	@FindBy(xpath = "//a[contains(@href,'location')]/following::a[1]//span")
+	WebElement editDeliveryValidation;
 
 	public static WebElement dynamicXpath(WebDriver driver, String xpath, String value) {
 		return driver.findElement(By.xpath(String.format(xpath, value)));
@@ -246,5 +256,25 @@ public class OrderPlacementPage extends BasePageClass {
 		System.out.println(deliveryPriorityElement.getText());
 		Assert.assertTrue(deliveryPriorityElement.getText().contains(deliveryPriority));
 		
+	}
+	
+	public void editDeliveryOption(String editDeliveryOption,String dropOffOption) throws InterruptedException {
+		editButtonDeliveryOption.click();
+		Thread.sleep(3000);
+		
+		String editDropOffOptionXpath = "//span[text()='%s']";
+		WebElement editDropOffElement = dynamicXpath(driver, editDropOffOptionXpath, dropOffOption);
+		editDropOffElement.click();
+		
+		String editDeliveryOptionXpath = "//span[text()='%s']/ancestor::label";
+		WebElement editDeliveryOptionElement = dynamicXpath(driver, editDeliveryOptionXpath, editDeliveryOption);
+		editDeliveryOptionElement.click();
+		Thread.sleep(5000);
+		List<WebElement> updateButtonSize = driver.findElements(By.xpath("//button[text()='Update']"));
+		if (updateButtonSize.size() != 0) {
+			updateButton.click();
+			Thread.sleep(3000);
+		}
+		Assert.assertTrue(editDeliveryValidation.getText().contains(editDeliveryOption));
 	}
 }
