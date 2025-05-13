@@ -3,15 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="TestCases.Transactions.Delivery_Transactions_2">
+      <class name="TestCases.Transactions.Delivery_Transactions_6">
         <methods>
           <include name="getResult"/>
-          <include name="DeliveryUberEats"/>
           <include name="startReport"/>
+          <include name="DeliveryUberEats"/>
           <include name="setup"/>
           <include name="tearDown"/>
         </methods>
-      </class> <!-- TestCases.Transactions.Delivery_Transactions_2 -->
+      </class> <!-- TestCases.Transactions.Delivery_Transactions_6 -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

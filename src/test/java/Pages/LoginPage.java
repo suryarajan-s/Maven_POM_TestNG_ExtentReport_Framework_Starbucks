@@ -50,9 +50,8 @@ public class LoginPage extends BasePageClass {
 	@FindBy(xpath = "//aside//div//div//div[2]/div")
 	WebElement userName;
 	
-	@FindBy(xpath = "//h1")
-	WebElement returnToMainContent;
-	
+	@FindBy(xpath = "//div[text()='Orders']")
+	WebElement ordersMenuOption;
 
 	
 	public void type(WebElement element, String username) {
@@ -144,6 +143,14 @@ public class LoginPage extends BasePageClass {
 		Assert.assertTrue(actualUserName.equalsIgnoreCase(applicationUserName));
 		hamBurgerButton.sendKeys(Keys.ESCAPE);
 		Thread.sleep(5000);
+	}
+	
+	public void reOrder() throws InterruptedException {
+		hamBurgerButton.click();
+		Thread.sleep(3000);
+		ordersMenuOption.click();
+		Thread.sleep(3000);
+		
 	}
 
 }

@@ -8,7 +8,7 @@ import com.aventstack.extentreports.Status;
 
 import TestCases.BaseTest;
 
-public class Delivery_Transactions_1 extends BaseTest {
+public class Delivery_Transactions_5 extends BaseTest {
 
 	@Test
 	public void DeliveryUberEats() throws IOException, InterruptedException {
@@ -29,7 +29,7 @@ public class Delivery_Transactions_1 extends BaseTest {
 		Thread.sleep(5000);
 
 		try {
-			loginPage.verifyLogin(testData.getTestData("1_TR", "expectedUserName"));
+			loginPage.verifyLogin(testData.getTestData("5_TR", "expectedUserName"));
 			extentTestThread.get().log(Status.PASS, "We have Successfully logged In the UberEats App");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during login: " + t.getMessage());
@@ -37,7 +37,7 @@ public class Delivery_Transactions_1 extends BaseTest {
 		}
 
 		try {
-			homePage.selectStoreAndDeliveyAddress(testData.getTestData("1_TR", "streetName"));
+			homePage.selectStoreAndDeliveyAddress(testData.getTestData("5_TR", "streetName"));
 			extentTestThread.get().log(Status.PASS,
 					"We have selected the store and Delivery address from Home page In the UberEats App");
 		} catch (Throwable t) {
@@ -47,15 +47,18 @@ public class Delivery_Transactions_1 extends BaseTest {
 		}
 
 		try {
-			homePage.selectProducts(testData.getTestData("1_TR", "menuData"), testData.getTestData("1_TR", "productName"));
+			homePage.selectProducts(testData.getTestData("5_TR", "menuData"), testData.getTestData("5_TR", "productName"));
 			extentTestThread.get().log(Status.PASS, "We have added products from Home page In the UberEats App");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during adding products in Uber eats: " + t.getMessage());
 			throw t;
 		}
-
+		
 		try {
-			homePage.customizeNonDrinkProduct(testData.getTestData("1_TR", "quantityValueDropDown"));
+			homePage.customizeSelectedProductWithoutNavigation(testData.getTestData("5_TR", "sizeData"),
+					testData.getTestData("5_TR", "milkSelection"), testData.getTestData("5_TR", "syrupSelection"),
+					testData.getTestData("5_TR", "shotSelection"), 1,
+					testData.getTestData("5_TR", "quantityValueDropDown"), testData.getTestData("5_TR", "beanSelection"));
 			extentTestThread.get().log(Status.PASS,
 					"We have customized product based on user data In the UberEats App");
 		} catch (Throwable t) {
@@ -63,32 +66,32 @@ public class Delivery_Transactions_1 extends BaseTest {
 					"Error during customizing products in Uber eats: " + t.getMessage());
 			throw t;
 		}
-
+		
 		try {
-			orderPlacepage.addToOrderForNonDrink("1_TR");
+			orderPlacepage.addToOrder(testData.getTestData("5_TR", "milkSelection"),
+					testData.getTestData("5_TR", "syrupSelection"), testData.getTestData("5_TR", "shotSelection"),
+					testData.getTestData("5_TR", "sizeData"), testData.getTestData("5_TR", "beanSelection"),"5_TR");
 			extentTestThread.get().log(Status.PASS,
-					"We have added the items and validated as per user data and proceeded with the checkout In the UberEats App");
+					"We have validated the condiments added and proceeded with the checkout In the UberEats App");
 			Thread.sleep(4000);
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL,
-					"Error in adding items  validating and checking out in Uber eats: " + t.getMessage());
+					"Error in validating condiments and checking out in Uber eats: " + t.getMessage());
 			throw t;
 		}
 		
 		try {
-			orderPlacepage.setDeliveryPriority(testData.getTestData("1_TR", "deliveryPriority"),"1_TR");
-			extentTestThread.get().log(Status.PASS,
-					"We have set the delivery options and validated as per user data and proceeded with the checkout In the UberEats App");
+			orderPlacepage.addTip(testData.getTestData("5_TR", "tipValue"),testData.getTestData("5_TR", "tipAmount"));
+			extentTestThread.get().log(Status.PASS, "We are able to add Tip and validate the total price change In the UberEats App");
 			Thread.sleep(4000);
 		} catch (Throwable t) {
-			extentTestThread.get().log(Status.FAIL,
-					"Error in setting the delivery Options and  validating the same in Uber eats: " + t.getMessage());
+			extentTestThread.get().log(Status.FAIL, "Error in adding tip in Uber eats: " + t.getMessage());
 			throw t;
 		}
 
-
+		
 		try {
-			orderPlacepage.placeOrder("1_TR");
+			orderPlacepage.placeOrder("5_TR");
 			extentTestThread.get().log(Status.PASS, "We have placed order In the UberEats App");
 			Thread.sleep(4000);
 		} catch (Throwable t) {
@@ -100,8 +103,8 @@ public class Delivery_Transactions_1 extends BaseTest {
 		driver.manage().window().maximize();
 
 		try {
-			rALoginPage.rALogin(testData.getTestData("1_TR", "rAUserName"), testData.getTestData("1_TR", "rACompanyName"),
-					testData.getTestData("1_TR", "rAPassword"));
+			rALoginPage.rALogin(testData.getTestData("5_TR", "rAUserName"), testData.getTestData("5_TR", "rACompanyName"),
+					testData.getTestData("5_TR", "rAPassword"));
 			extentTestThread.get().log(Status.PASS, "Login action performed successfully");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during login: " + t.getMessage());
@@ -109,9 +112,9 @@ public class Delivery_Transactions_1 extends BaseTest {
 		}
 
 		try {
-			guestCheckPage.rAGuestCheckReport(testData.getTestData("1_TR", "rAStoreName"),
-					testData.getTestData("1_TR", "productName"), testData.getTestData("1_TR", "productPrize"),
-					"1_TR");
+			guestCheckPage.rAGuestCheckReport(testData.getTestData("5_TR", "rAStoreName"),
+					testData.getTestData("5_TR", "productName"), testData.getTestData("5_TR", "productPrize"),
+					"5_TR");
 			extentTestThread.get().log(Status.PASS, "Successfully validated the order in R&A App");
 		} catch (Throwable t) {
 			extentTestThread.get().log(Status.FAIL, "Error during order validation: " + t.getMessage());

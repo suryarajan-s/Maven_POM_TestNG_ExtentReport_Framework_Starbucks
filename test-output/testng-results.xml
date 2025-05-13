@@ -2,46 +2,46 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-05-05T14:42:14 IST" name="Default suite" finished-at="2025-05-05T14:45:50 IST" duration-ms="215930">
+  <suite started-at="2025-05-13T14:20:14 IST" name="Default suite" finished-at="2025-05-13T14:20:50 IST" duration-ms="35852">
     <groups>
     </groups>
-    <test started-at="2025-05-05T14:42:14 IST" name="Default test" finished-at="2025-05-05T14:45:50 IST" duration-ms="215930">
-      <class name="TestCases.Transactions.Delivery_Transactions_2">
-        <test-method is-config="true" signature="startReport()[pri:0, instance:TestCases.Transactions.Delivery_Transactions_2@70ed52de]" started-at="2025-05-05T14:42:13 IST" name="startReport" finished-at="2025-05-05T14:42:14 IST" duration-ms="1050" status="PASS">
+    <test started-at="2025-05-13T14:20:14 IST" name="Default test" finished-at="2025-05-13T14:20:50 IST" duration-ms="35852">
+      <class name="TestCases.Delivery_LoginCheck">
+        <test-method is-config="true" signature="startReport()[pri:0, instance:TestCases.Delivery_LoginCheck@70ed52de]" started-at="2025-05-13T14:20:12 IST" name="startReport" finished-at="2025-05-13T14:20:14 IST" duration-ms="2058" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startReport -->
-        <test-method is-config="true" signature="setup(java.lang.reflect.Method)[pri:0, instance:TestCases.Transactions.Delivery_Transactions_2@70ed52de]" started-at="2025-05-05T14:42:14 IST" name="setup" finished-at="2025-05-05T14:42:25 IST" duration-ms="11474" status="PASS">
+        <test-method is-config="true" signature="setup(java.lang.reflect.Method)[pri:0, instance:TestCases.Delivery_LoginCheck@70ed52de]" started-at="2025-05-13T14:20:15 IST" name="setup" finished-at="2025-05-13T14:20:23 IST" duration-ms="8486" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void TestCases.Transactions.Delivery_Transactions_2.DeliveryUberEats() throws java.io.IOException,java.lang.InterruptedException]]>
+                <![CDATA[public void TestCases.Delivery_LoginCheck.DeliveryUberEats() throws java.io.IOException,java.lang.InterruptedException]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="DeliveryUberEats()[pri:0, instance:TestCases.Transactions.Delivery_Transactions_2@70ed52de]" started-at="2025-05-05T14:42:25 IST" name="DeliveryUberEats" finished-at="2025-05-05T14:45:49 IST" duration-ms="203776" status="PASS">
+        <test-method signature="DeliveryUberEats()[pri:0, instance:TestCases.Delivery_LoginCheck@70ed52de]" started-at="2025-05-13T14:20:23 IST" name="DeliveryUberEats" finished-at="2025-05-13T14:20:50 IST" duration-ms="26642" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- DeliveryUberEats -->
-        <test-method is-config="true" signature="getResult(org.testng.ITestResult)[pri:0, instance:TestCases.Transactions.Delivery_Transactions_2@70ed52de]" started-at="2025-05-05T14:45:49 IST" name="getResult" finished-at="2025-05-05T14:45:50 IST" duration-ms="605" status="PASS">
+        <test-method is-config="true" signature="getResult(org.testng.ITestResult)[pri:0, instance:TestCases.Delivery_LoginCheck@70ed52de]" started-at="2025-05-13T14:20:50 IST" name="getResult" finished-at="2025-05-13T14:20:50 IST" duration-ms="650" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=DeliveryUberEats status=SUCCESS method=Delivery_Transactions_2.DeliveryUberEats()[pri:0, instance:TestCases.Transactions.Delivery_Transactions_2@70ed52de] output={null}]]]>
+                <![CDATA[[TestResult name=DeliveryUberEats status=SUCCESS method=Delivery_LoginCheck.DeliveryUberEats()[pri:0, instance:TestCases.Delivery_LoginCheck@70ed52de] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getResult -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:TestCases.Transactions.Delivery_Transactions_2@70ed52de]" started-at="2025-05-05T14:45:50 IST" name="tearDown" finished-at="2025-05-05T14:45:50 IST" duration-ms="347" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:TestCases.Delivery_LoginCheck@70ed52de]" started-at="2025-05-13T14:20:50 IST" name="tearDown" finished-at="2025-05-13T14:20:51 IST" duration-ms="426" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- TestCases.Transactions.Delivery_Transactions_2 -->
+      </class> <!-- TestCases.Delivery_LoginCheck -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
